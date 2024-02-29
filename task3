@@ -1,0 +1,67 @@
+import random
+import string
+
+alphabet = string.ascii_lowercase
+
+words = {
+    3: ['fox', 'day', 'boy'],
+    4: ['fork', 'knee', 'soon'],
+    5: ['knife', 'elbow', 'arrow']
+}
+
+field = []
+
+
+def show(spisok):
+    for row in spisok:
+        print(row)
+    print('\n')
+
+
+def create_map(map, size):
+    for _ in range(size):
+        map.append(['_']*size)
+
+
+def insert_word(map, key):
+    global words
+    word = random.choice(words[key])
+    while True:
+        row = random.randint(0, 9)
+        column = random.randint(0, 10 - len(word))
+
+        allow = True
+
+        for i in range(column, column + len(word)):
+            if map[row][i] != '_':
+                allow = False
+                break
+
+        if not allow:
+            continue
+
+        counter = 0
+        for i in range(column, column + len(word)):
+            map[row][i] = word[counter]
+            counter += 1
+        break
+
+
+
+def fill_random(map,size):
+    for y in range(size):
+        for x in range(size):
+            if map[y][x] == '_':
+                map[y][x] = random.choice(alphabet)
+
+create_map(field, 10)
+
+
+print("---------------")
+
+for i in range(3):
+    insert_word(field, i + 3)
+fill_random(field, 10)
+show(field)
+
+
